@@ -127,6 +127,24 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function getRandomColor() {
+    const colors = [
+        '#f1c40f',
+        '#3498db',
+        '#1abc9c',
+        '#8e44ad',
+        '#2c3e50',
+        '#fd79a8',
+        '#fab1a0',
+        '#e84393',
+        '#a29bfe',
+        '#fdcb6e'
+    ];
+
+    const randomIdx = getRandomInt(colors.length);
+    return colors[randomIdx];
+}
+
 export default class Board extends React.Component {
     constructor (props) {
         super(props);
@@ -154,25 +172,10 @@ export default class Board extends React.Component {
         const h = board.length;
         const w = board[0].length;
 
-        const colors = [
-            '#f1c40f',
-            '#3498db',
-            '#1abc9c',
-            '#8e44ad',
-            '#2c3e50',
-            '#fd79a8',
-            '#fab1a0',
-            '#e84393',
-            '#a29bfe',
-            '#fdcb6e'
-        ];
-
         for (let i=0; i < h; i++) {
             for (let j=0; j < w; j++) {
-                const idx = getRandomInt(colors.length);
-
                 if (board[i][j])
-                    ctx.fillStyle = colors[idx];
+                    ctx.fillStyle = getRandomColor();
                 else
                     ctx.fillStyle = 'black';
 
