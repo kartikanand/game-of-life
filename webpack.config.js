@@ -11,7 +11,7 @@ module.exports = {
         rules: [
             {
                 include: [
-                    path.resolve(__dirname, "src/scripts"),
+                    path.resolve(__dirname, 'src/scripts'),
                 ],
                 test: /\.jsx?$/,
                 use: {
@@ -21,6 +21,23 @@ module.exports = {
                     }
                 }
             },
+            {
+                include: [
+                    path.resolve(__dirname, 'src/styles')
+                ],
+                test: /\.s?css$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader"
+                    },
+                    {
+                        loader: "sass-loader"
+                    }
+                ]
+            }
         ]
     }
 };
