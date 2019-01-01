@@ -1,5 +1,3 @@
-import React from 'react';
-
 /*
  * Get alive neighbours for a particular cell.
  * Be sure to look for crossing array bounds
@@ -142,32 +140,29 @@ function getRandomColor() {
     ];
 
     const randomIdx = getRandomInt(colors.length);
-    return colors[randomIdx];
+    return colors[3];
 }
 
-export default class Board extends React.Component {
-    constructor (props) {
-        super(props);
-
-        this.height = window.innerWidth;
-        this.width = window.innerWidth;
+class Board {
+    constructor (canvasId) {
+        this.height = 400;
+        this.width = 400;
 
         const board = getRandomBoard(this.height/10, this.width/10);
 
-        this.state = {
-            board: board
-        };
-
-        this.canvas = React.createRef();
+        this.board = board
+        this.canvas = document.getElementById(canvasId);
 
         // bind functions
         this.startSimulation = this.startSimulation.bind(this);
         this.stopSimulation = this.stopSimulation.bind(this);
+        this.updateCells = this.updateCells.bind(this);
+        this.init = this.init.bind(this);
     }
 
     updateCells () {
-        const ctx = this.canvas.current.getContext('2d');
-        const board = this.state.board;
+        const ctx = this.canvas.getContext('2d');
+        const board = this.board;
 
         const h = board.length;
         const w = board[0].length;
@@ -191,40 +186,21 @@ export default class Board extends React.Component {
     startSimulation () {
         this.timerID = setInterval(
             () => {
-                this.setState((prevState, props) => {
-                    const nextBoard = getNextState(prevState.board);
-                    return {board: nextBoard};
-                });
+                this.board = getNextState(this.board);
+                this.updateCells();
             },
-            100
+            1000
         );
     }
 
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    componentDidMount () {
-        const ctx = this.canvas.current.getContext('2d');
+    init () {
+        const ctx = this.canvas.getContext('2d');
 
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, this.height, this.width);
 
         this.updateCells();
-    }
 
-    componentDidUpdate() {
-        this.updateCells();
-    }
-
-    render () {
-        return (
-            <React.Fragment>
-                <button onClick={this.startSimulation}>Start</button>
-                <button onClick={this.stopSimulation}>Stop</button>
-
-                <canvas ref={this.canvas} width={this.width} height={this.height} />
-            </React.Fragment>
-        );
+        this.startSimulation();
     }
 }
