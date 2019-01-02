@@ -148,19 +148,18 @@ class Board {
         this.height = 400;
         this.width = 400;
 
-        const board = getRandomBoard(this.height/10, this.width/10);
-
-        this.board = board
+        this.board = getRandomBoard(this.height/10, this.width/10);
         this.canvas = document.getElementById(canvasId);
 
         // bind functions
         this.startSimulation = this.startSimulation.bind(this);
         this.stopSimulation = this.stopSimulation.bind(this);
-        this.updateCells = this.updateCells.bind(this);
+        this.displayBoard = this.displayBoard.bind(this);
+        this.addEventListeners = this.addEventListeners.bind(this);
         this.init = this.init.bind(this);
     }
 
-    updateCells () {
+    displayBoard () {
         const ctx = this.canvas.getContext('2d');
         const board = this.board;
 
@@ -187,10 +186,18 @@ class Board {
         this.timerID = setInterval(
             () => {
                 this.board = getNextState(this.board);
-                this.updateCells();
+                this.displayBoard();
             },
-            1000
+            10
         );
+    }
+
+    addEventListeners () {
+        const startBtn = document.getElementById('js-start');
+        const stopBtn = document.getElementById('js-stop');
+
+        startBtn.addEventListener('click', this.startSimulation);
+        stopBtn.addEventListener('click', this.stopSimulation);
     }
 
     init () {
@@ -199,8 +206,7 @@ class Board {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, this.height, this.width);
 
-        this.updateCells();
-
-        this.startSimulation();
+        this.displayBoard();
+        this.addEventListeners();
     }
 }
