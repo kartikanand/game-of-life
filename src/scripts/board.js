@@ -147,6 +147,8 @@ class Board {
     constructor (canvasId) {
         this.height = 400;
         this.width = 400;
+        this.timer = null;
+        this.speed = this.getSpeed();
 
         this.board = getRandomBoard(this.height/10, this.width/10);
         this.canvas = document.getElementById(canvasId);
@@ -156,6 +158,8 @@ class Board {
         this.stopSimulation = this.stopSimulation.bind(this);
         this.displayBoard = this.displayBoard.bind(this);
         this.addEventListeners = this.addEventListeners.bind(this);
+        this.handleSlider = this.handleSlider.bind(this);
+        this.getSpeed = this.getSpeed.bind(this);
         this.init = this.init.bind(this);
     }
 
@@ -178,26 +182,48 @@ class Board {
         }
     }
 
-    stopSimulation () {
-        clearInterval(this.timerID);
+    getSpeed () {
+        const speedSlider = document.getElementById('js-slider');
+        const speed = speedSlider.value;
+
+        return speed;
     }
 
-    startSimulation () {
-        this.timerID = setInterval(
+    stopSimulation (ev) {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
+    startSimulation (ev) {
+        this.timer = setInterval(
             () => {
                 this.board = getNextState(this.board);
                 this.displayBoard();
             },
-            10
+            this.speed
         );
+    }
+
+    handleSlider (ev) {
+        const speed = ev.target.value;
+        this.speed = speed;
+
+        console.log(this.speed);
+
+        if (this.timer != null) {
+            this.stopSimulation();
+            this.startSimulation();
+        }
     }
 
     addEventListeners () {
         const startBtn = document.getElementById('js-start');
         const stopBtn = document.getElementById('js-stop');
+        const speedSlider = document.getElementById('js-slider');
 
         startBtn.addEventListener('click', this.startSimulation);
         stopBtn.addEventListener('click', this.stopSimulation);
+        speedSlider.addEventListener('change', this.handleSlider);
     }
 
     init () {
