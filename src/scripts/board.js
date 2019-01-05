@@ -208,8 +208,6 @@ class Board {
         const speed = ev.target.value;
         this.speed = speed;
 
-        console.log(this.speed);
-
         if (this.timer != null) {
             this.stopSimulation();
             this.startSimulation();
