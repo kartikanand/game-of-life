@@ -1,38 +1,28 @@
-# Game of Life (What the hell is this ?)
-This app is an implementation of Conway's Game of Life created using JavaScript while using React to render cells. You can read more about Conway's Game of Life and the rules that cells must follow for living or dying [here](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+# Game of Life
 
-# Demo
-You can view a demo of this app here - http://www.kartikanand.com/game-of-life/
+[Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in plain HTML, CSS and JavaScript (ES modules). No frameworks, no build step, no dependencies.
 
-# Build
-This app uses webpack to bundle everything into a single js file for scripts and styles. You can find the generated js file in the `dist` folder.
-The source for these scripts and styles can be found in the aptly named `src` folder.
+**Demo:** https://kartikanand.github.io/game-of-life/
 
-To build use the following command:
+## Run locally
 
-    npx webpack
+ES modules need to be served over HTTP, so use any static server:
 
-# Usage
-You can then use local server to serve the `index.html` file which correctly uses the `dist` path. One way for doing it is:
+    python3 -m http.server
 
-    python3 -m "http.server"
+then open http://localhost:8000.
 
-You'll find two buttons on the page. The `Start` button will the start the simulation with a random distribution of cells, while the `Stop` button will only pause it, not reset it.
+## Layout
 
-To reset simply reload the page.
+- `src/scripts/life.js` – pure game logic (no DOM)
+- `src/scripts/renderer.js` – canvas drawing
+- `src/scripts/main.js` – wiring and controls
+- `src/styles/main.css` – styles (cascade layers, nesting, `light-dark()`)
 
-# How it works
-The app relies on React references to latch onto the html canvas element. The rest of it is just timers to update the next state of each cell. You can find the meat of the code at `src/scripts/board.js`
+## Contributing
 
-# Contributing
-Please feel free to send pull requests or open a bug or feature request
-using the Issues tab.
+Issues and pull requests are welcome. See [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
 
-# To Do
-* Add a pause button and make `Stop` do what it is supposed to do
-* Add a button to make random distributions
-* Allow users to create their own distributions using mouse clicks
-* Allow users to change the speed of simulation
+## License
 
-# License
-MIT License.
+MIT

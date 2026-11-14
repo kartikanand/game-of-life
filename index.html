@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Game of Life</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <title>Game of Life</title>
+  <link rel="stylesheet" href="src/styles/main.css">
+  <script type="module" src="src/scripts/main.js"></script>
 </head>
 <body>
-    <div id="js-app">
-        <button id="js-start" type="button">Start</button>
-        <button id="js-stop" type="button">Stop</button>
+  <main>
+    <h1>Conway's Game of Life</h1>
 
-        <input type="range" name="slider" id="js-slider" min="0" max="1000" step="-1">
-        <label for="slider">Speed</label>
-
-        <canvas id="js-canvas" width="400px" height="400px" />
+    <div class="controls">
+      <button id="start" type="button">Start</button>
+      <button id="stop" type="button">Stop</button>
+      <label>
+        Delay (ms)
+        <input id="speed" type="range" min="10" max="1000" step="10" value="200">
+      </label>
     </div>
 
-    <script type="text/javascript" src="src/scripts/board.js"></script>
-    <script type="text/javascript" src="src/scripts/app.js"></script>
+    <canvas id="canvas" width="400" height="400" aria-label="Game of Life board"></canvas>
+  </main>
 </body>
 </html>
