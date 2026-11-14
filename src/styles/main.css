@@ -13,10 +13,20 @@
     --fg: light-dark(#1b1b22, #e8e8ee);
     --muted: light-dark(#5c5c6a, #a0a0b0);
     --accent: light-dark(#6c3fb5, #a98bf0);
-    --board-bg: light-dark(#ffffff, #0b0b10);
-    --board-grid: light-dark(#e4e4ec, #1b1b24);
-    --board-alive: light-dark(#6c3fb5, #a98bf0);
+    /* Read from JS for canvas drawing, so these must be plain colours:
+       canvas fillStyle can't parse light-dark(). */
+    --board-bg: #ffffff;
+    --board-grid: #e4e4ec;
+    --board-alive: #6c3fb5;
     font-family: system-ui, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --board-bg: #0b0b10;
+      --board-grid: #1b1b24;
+      --board-alive: #a98bf0;
+    }
   }
 
   body {
