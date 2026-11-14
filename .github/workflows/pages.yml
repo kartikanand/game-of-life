@@ -19,9 +19,17 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/configure-pages@v6
       # Publish only what the site needs, not README/SECURITY/.github.
+      # Append the commit SHA to asset URLs (HTML references and ES module
+      # imports) so browsers never mix cached files from different deploys.
       - run: |
+          V="${GITHUB_SHA::7}"
           mkdir _site
           cp -r index.html src _site/
+          sed -E -i "s#(src/(styles/main\.css|scripts/main\.js))\"#\1?v=$V\"#" _site/index.html
+          sed -E -i "s#(from '\./[a-z]+\.js)'#\1?v=$V'#" _site/src/scripts/*.js
+          grep -q "main.js?v=$V" _site/index.html
+          grep -q "main.css?v=$V" _site/index.html
+          grep -q "life.js?v=$V" _site/src/scripts/main.js
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
