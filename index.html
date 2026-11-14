@@ -12,18 +12,37 @@
 </head>
 <body>
   <main>
-    <h1>Conway's Game of Life</h1>
+    <header>
+      <h1>Conway's Game of Life</h1>
+      <p class="stats" aria-live="off">Generation <output id="generation">0</output> · Population <output id="population">0</output></p>
+    </header>
 
-    <div class="controls">
-      <button id="start" type="button">Start</button>
-      <button id="stop" type="button">Stop</button>
-      <label>
-        Delay (ms)
-        <input id="speed" type="range" min="10" max="1000" step="10" value="200">
-      </label>
+    <canvas id="canvas" aria-label="Game of Life board. Click or drag to toggle cells."></canvas>
+
+    <div class="controls" role="group" aria-label="Simulation controls">
+      <button id="play" type="button" aria-keyshortcuts="Space">Play</button>
+      <button id="step" type="button" aria-keyshortcuts="N">Step</button>
+      <button id="random" type="button" aria-keyshortcuts="R">Randomize</button>
+      <button id="clear" type="button" aria-keyshortcuts="C">Clear</button>
     </div>
 
-    <canvas id="canvas" width="400" height="400" aria-label="Game of Life board"></canvas>
+    <div class="settings">
+      <label>Speed
+        <input id="speed" type="range" min="1" max="60" value="10">
+        <output id="speed-out">10 gen/s</output>
+      </label>
+      <label>Pattern
+        <select id="pattern">
+          <option value="">Choose…</option>
+          <option value="glider">Glider</option>
+          <option value="pulsar">Pulsar</option>
+          <option value="gun">Gosper glider gun</option>
+        </select>
+      </label>
+      <label class="check"><input id="wrap" type="checkbox"> Wrap edges</label>
+    </div>
+
+    <p class="hint">Click or drag on the board to draw. Keys: <kbd>Space</kbd> play/pause, <kbd>N</kbd> step, <kbd>R</kbd> randomize, <kbd>C</kbd> clear.</p>
   </main>
 </body>
 </html>
